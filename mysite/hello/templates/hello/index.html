@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+</head>
+<body>
+    <p>Hello, Django.</p>
+{#    <p style="color: green">第一个变量：{{ name }}</p>#}
+{#    for循环列表#}
+{#    {% for book in books %}#}
+{#        <li>{{ book }}</li>#}
+{#    {% endfor %}#}
+{% for user in userlist %}
+    {% if user %}
+        <li>{{ user.name }} is {{ user.age}} age.</li>
+    {% else %}
+        用户不存在.
+    {% endif %}
+{% endfor %}
+</body>
+</html>

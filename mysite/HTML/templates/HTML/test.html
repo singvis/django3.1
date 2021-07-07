@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+{#头部#}
+<head>
+    <meta charset="UTF-8">
+    <title>html测试页面</title>
+</head>
+{#正文#}
+<body>
+    {#标题#}
+{#    <h1>This is a heading</h1>#}
+{#    <h2>This is a heading</h2>#}
+{#    <h3>This is a heading</h3>#}
+    {#段落#}
+{#    <p>This is a paragraph</p>#}
+{#    <p>This is another paragraph</p>#}
+    {#超链接#}
+{#    <a href="https://www.baidu.com" target="top">百度一下</a>#}
+    {#盒子div#}
+{#    <div>#}
+{#        <div>第一个框</div>#}
+{#        <div>第二个框</div>#}
+{#    </div>#}
+{##}
+{#表格#}
+{#<table border="1">#}
+{#    表头#}
+{#    <thead>#}
+{#        <tr>#}
+{#            <th>姓名</th>#}
+{#            <th>年龄</th>#}
+{#        </tr>#}
+{#    </thead>#}
+{#    表的正文#}
+{#    <tbody>#}
+{#        <tr>#}
+{#            <td>张三</td>#}
+{#            <td>18</td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <td>李四</td>#}
+{#            <td>20</td>#}
+{#        </tr>#}
+{#    </tbody>#}
+</table>
+
+
+<form name="user" method="post" action="{% url "HTML:html" %}" target="_self" enctype="multipart/form-data">
+    {% csrf_token %}
+    姓名：<input type="text" name="username" value="" placeholder="姓名">
+    <br><br>
+    密码：<input type="password" name="password" value="" placeholder="密码">
+    <br><br>
+    性别：<input type="radio" name="sex" value="1" checked>男<input type="radio" name="sex" value="2">女
+    <br><br>
+    手机：<input type="text" name="phone" value="" placeholder="手机">
+    <br><br>
+    邮箱：<input type="email" name="email" value="" placeholder="邮箱">
+    <br><br>
+    跑步 <input type="checkbox" name="hobby" value="sport">
+    读书 <input type="checkbox" name="hobby" value="read">
+    <br><br>
+    技能：
+    <select name="skill" size="4" multiple>
+        <option value="1" selected>python</option>
+        <option value="2">java</option>
+        <option value="3">c</option>
+        <option value="4">Go</option>
+        <option value="5">django</option>
+    </select>
+    <br><br>
+    个人简介:
+    <textarea name="introduce" cols="50" rows="5" placeholder="请简短介绍下自己"></textarea>>
+    <br><br>
+    附件上传:
+    <input type="file" name="file">
+    <br><br>
+    <input type="submit" name="save" value="提交">
+    <input type="reset" name="reset" value="重置">
+</form>
+</body>
+
+<br><br><br><br><br><br><br><br>
+<footer>点滴技术©2021</footer>
+</html>

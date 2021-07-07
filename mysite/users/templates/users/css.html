@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS 测试</title>
+
+{#    ID选择器#}
+    <style type="text/css">
+        #red {color: red}
+        #green {color: green}
+    </style>
+{#    类选择器#}
+    <style type="text/css">
+        .center {text-align: center}
+    </style>
+{#    多种选择器混用#}
+    <style>
+        .list h1{
+            color: #CC3434;
+            background: #e8e8e8;
+        }
+        #yellow h2{
+            color: yellowgreen;
+            background: #e8e8e8;
+        }
+    </style>
+{#    属性选择器#}
+    <style type="text/css">
+        [title] {
+            color: red;
+        }
+    </style>
+{#    元素选择器#}
+    <style>
+        h4 {
+            color: red;
+        }
+    </style>
+
+{#    引用外部bootstrap的cdn方式#}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+{#    引用本地方式#}
+    <link rel="stylesheet" href="/static/css/mystyle.css">
+
+</head>
+<body>
+    <p id="red">这是红色的段落.</p>
+    <p id="green">这是绿色的段落.</p>
+
+    <h1 class="center">The text is center.</h1>
+
+    <div class="list">
+        <h1>我使用h1的样式</h1>
+    </div>
+
+    <div id="yellow">
+        <h2>我使用h2的样式</h2>
+    </div>
+
+    <h3 title="h3">我使用属性选择器.</h3>
+
+    <h4>我使用元素选择器.</h4>
+
+
+    <p class="text-muted">
+        <a href="#" class="text-reset">我使用CDN样式.</a>
+    </p>
+    <h5>我使用h5样式.</h5>
+
+
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+    {% block head %}NetDevOps{% endblock %}
+    </title>
+</head>
+
+<body>
+    {#每个页面都有一个标题且样式基本不会变，可以抽象出来，变的标题内容做成变量#}
+    <p style="color: green">
+        {% block title %} 用户列表 {% endblock %}
+    </p>
+
+    {#页面的内容都是变化的，做成变量即可#}
+    {% block content %}
+        这是模板的内容
+    {% endblock %}
+
+    {% block js %}
+    {% endblock %}
+
+    <p style="color: red">版权所有©点滴技术</p>
+</body>
+</html>

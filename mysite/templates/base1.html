@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+{% load  static %}
+<html lang="en">
+    
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- 页面标签 -->
+        <title>
+            {% block title %}自动化运维平台{% endblock %}
+        </title>
+
+        <!-- 加载CSS样式 -->
+        <!-- Bootstrap core CSS -->
+        <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+        <link href="{% static "css/bootstrap-reset.css" %}" rel="stylesheet">
+
+        <!--Animation css-->
+        <link href="{% static "css/animate.css" %}" rel="stylesheet">
+
+        <!--Icon-fonts css-->
+        <link href="{% static "assets/font-awesome/css/font-awesome.css" %}" rel="stylesheet" />
+        <link href="{% static "assets/ionicon/css/ionicons.min.css" %}" rel="stylesheet" />
+
+        <!--Morris Chart CSS -->
+        <link rel="stylesheet" href="{% static "assets/morris/morris.css" %}">
+
+        <!-- sweet alerts -->
+{#        <link href="{% static "assets/sweet-alert/sweet-alert.min.css" %}" rel="stylesheet">#}
+
+        <!-- Custom styles for this template -->
+        <link href="{% static "css/style.css"  %}" rel="stylesheet">
+        <link href="{% static "css/helper.css" %}" rel="stylesheet">
+
+        <!-- Plugin Css-->
+        <link rel="stylesheet" href="{% static "assets/magnific-popup/magnific-popup.css"%}" />
+        <link rel="stylesheet" href="{% static "assets/jquery-datatables-editable/datatables.css"%}" />
+
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="{% static "css/style.css" %}">
+        <link rel="stylesheet" href="{% static "css/helper.css" %}">
+
+        {% block css %}{% endblock %}
+</head>
+
+    <body>
+        <!-- Aside Start-->
+        <aside class="left-panel">
+            <!-- brand -->
+            <div class="logo">
+                <a href="{% url 'index' %}" class="logo-expanded">
+                    <i class="ion-social-buffer"></i>
+                    <span class="nav-label">自动化运维平台</span>
+                </a>
+            </div><!-- / brand -->
+
+            <!-- Navbar Start 导航栏 -->
+            <nav class="navigation">
+                <ul class="list-unstyled">
+                    <li class="active"><a href="#"><i class="ion-home"></i> <span class="nav-label">仪表盘</span></a></li>
+                    <li class="has-submenu"><a href="#"><i class="ion-android-social-user"></i> <span class="nav-label">用户权限管理</span></a>
+                <ul class="list-unstyled">
+                    <li class="users"><a href="{% url 'users:userlist' %}">用户管理</a></li>
+                    <li class="roles"><a href="#">角色管理</a></li>
+                    <li class="permissions"><a href="#">权限管理</a></li>
+                </ul>
+                    </li>
+                </ul>
+            </nav><!-- Navbar Ends -->
+        </aside><!-- Aside Ends-->
+
+        <!--Main Content Start -->
+        <section class="content">
+            
+            <!-- Header -->
+            <header class="top-head container-fluid">
+                <!-- 左上角收缩 导航栏 -->
+                <button type="button" class="navbar-toggle pull-left">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <nav class=" navbar-default" role="navigation">
+                    <!-- Right navbar -->
+                    <ul class="nav navbar-nav navbar-right top-menu top-right-menu">
+                        <!-- user login dropdown start-->
+                        <li class="dropdown text-center">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <img alt="" src="{% static "img/avatar-2.jpg" %}" class="img-circle profile-img thumb-sm">
+                                <span class="username"> admin </span> <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu pro-menu fadeInUp animated" tabindex="5003" style="overflow: hidden; outline: none;">
+                                <li><a href="#"><i class="fa fa-edit"></i> 修改密码</a></li>
+                                <li><a href="#"><i class="fa fa-sign-out"></i> 退出 </a></li>
+                            </ul>
+                        </li>
+                        <!-- user login dropdown end -->       
+                    </ul>
+                    <!-- End right navbar -->
+                </nav>
+                
+            </header>
+            <!-- Header Ends -->
+            <!-- 以上就是每一个页面共用的部分，即母版 -->
+
+            <!-- Page Content Start -->
+            <!-- ================== -->
+            <!-- 以下就是每一个页面自定义内容的部分 -->
+            <div class="wraper container-fluid">
+                <div class="page-title"> 
+                    <h3 class="title"> {% block page-title %} {% endblock %} </h3>
+                </div>
+
+                {% block page-content %} {% endblock %}
+
+            </div>
+            <!-- Page Content Ends -->
+            <!-- ================== -->
+
+            <!-- 页脚 Footer Start -->
+            <footer class="footer">
+        		2021©自动化运维平台
+            </footer>
+            <!-- 页脚 Footer Ends -->
+
+        </section>
+        <!-- Main Content Ends -->
+        <script src="{% static 'js/jquery.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/wow.min.js' %}"></script>
+        <script src="{% static 'js/pace.min.js' %}"></script>
+        <!--控制菜单栏点击显示子菜单-->
+        <script src="{% static 'js/jquery.app.js' %}"></script>
+        <!--子菜单点击时，不收缩-->
+        <script src="{% static 'js/jquery.nicescroll.js' %}" ></script>
+
+        {% block js %}{% endblock %}
+
+    </body>
+</html>

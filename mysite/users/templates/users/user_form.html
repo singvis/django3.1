@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+<p style="color: green">
+    {% block head %} 添加用户 {% endblock %}
+</p>
+
+{% block title %} 添加用户 {% endblock %}
+
+{% block content %}
+
+    <form id="addform" enctype="application/x-www-form-urlencoded">
+        姓名：<input type="text" name="name"  placeholder="姓名">
+        <br><br>
+        手机：<input type="text" name="phone"  placeholder="手机号">
+        <br><br>
+        密码：<input type="password" name="password"  placeholder="密码">
+        <br><br>
+        <input type="radio" name="sex" value="1" checked>男
+        <input type="radio" name="sex" value="2">女
+        <br><br>
+        <button id="savebtn" type="button" value="保存" name="_save">保存</button>
+        <button id="addanotherbtn" type="button" value="保存并增加另一个" name="_addanother">保存并添加一个</button>
+    </form>
+
+{% endblock %}
+
+{% block js %}
+    {#导入jQuery#}
+    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+
+    <script type="text/javascript">
+        $("#savebtn").click(function () {
+            data = $("#addform").serialize();
+            console.log(data)
+            $.ajax({
+                type: "post",
+                url: "{% url 'users:userlist' %}",
+                data: data,
+                success: function (result) {
+                    console.log(result)
+                    status = result.code
+                    console.log(status)
+                    if (status == 0){
+                        alert(result['result'])
+                        {#alert(result['next_url'])#}
+                        location.href = result['next_url']
+                    }
+                    else {
+                        err = result['result']
+                        console.log(err)
+                        alert('添加用户失败')
+                        {#$("#erros").html(err)#}
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

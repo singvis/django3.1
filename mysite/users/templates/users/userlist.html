@@ -1,0 +1,257 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block title %}
+    用户列表
+{% endblock %}
+
+{% block page-title %}
+    用户列表
+{% endblock %}
+
+
+{% block css %}
+    <!-- sweet alerts -->
+{#    <link href="{% static "assets/sweet-alert/sweet-alert.min.css"%}" rel="stylesheet">#}
+    <link rel="stylesheet" href="{% static "assets/sweet-alert/sweetalert2.min.css"%}">
+    <link rel="stylesheet" href="{% static "assets/sweet-alert/sweetalert2.css"%}">
+
+{% endblock %}
+
+{% block page-content %}
+<div class="row">
+
+    <div class="panel">
+        <div class="panel-body">
+            <!--添加及搜索行 start-->
+            <div class="row">
+                <!--添加按钮-->
+{#                {% if perms.users.add_userprofile %}#}
+                <div class="col-sm-6">
+                    <div class="m-b-30">
+                        <a href="{% url 'users:useradd' %}" type="button" class="btn btn-primary waves-effect waves-light">添加用户 <i class="fa fa-plus"></i></a>
+                    </div>
+                </div> <!--添加按钮 ends-->
+{#                {% endif %}#}
+
+                <!--搜索-->
+                <div class="col-md-3" style="float: right">
+                    <form class="form-horizontal" role="form">
+                        <div class="input-group">
+                            <input type="text"  name="keyword" class="form-control"  value="{{ keyword|default_if_none:'' }}" placeholder="请输入查询的关键字">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-effect-ripple btn-primary">搜索</button>
+                            </span>
+                        </div>
+                    </form>
+                </div><!--搜索 ends-->
+
+            </div><!--添加及搜索行 ends-->
+
+            <!--表格 start-->
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>UID</th>
+                        <th>用户名</th>
+                        <th>管理员</th>
+                        <th>中文名</th>
+                        <th>手机</th>
+                        <th>性别</th>
+                        <th>用户状态</th>
+                        <th>上次登陆时间</th>
+{#                        {% if perms.users.change_userprofile or perms.users.delete_userprofile %}#}
+                        <th>操作</th>
+{#                        {% endif %}#}
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for user in users %}
+                <tr class="gradeA">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{% if user.is_superuser == 1 %}超级管理员 {% else %} 普通用户 {% endif %}</td>
+                    <td>{{ user.cn_name }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.get_sex_display }}</td>
+                    <td>
+                        {% if user.is_active == 1 %}
+                            活跃 <a href="#" class="btn btn-warning btn-xs">禁用</a>
+                        {% else %}
+                            禁用 <a href="#" class="btn btn-success btn-xs">活跃</a>
+                        {% endif %}
+                    </td>
+                    <td>{% if user.last_login == None %}未登录{% else %} {{ user.last_login }} {% endif %}</td>
+                    <td class="actions">
+                    <a href="{% url 'users:useredit' user.id %}" class="btn btn-primary btn-xs">编辑</a>
+                    <a id="delbtn" userid="{{ user.id }}" class="btn btn-danger btn-xs">删除</a>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table><!--表格 ends-->
+        </div> <!-- panel-body ends-->
+
+
+        <!--分页 start-->
+        <div class="row">
+            <div class="col-md-4">
+               <p style="margin-top: 10px"> 显示 [{{ page_obj.paginator.count }}] 条数据中的 第 [{{ page_obj.start_index }}] 至 [{{ page_obj.end_index }}] 的数据</p>
+            </div>
+            <div class="col-md-8">
+                 {% if page_obj.paginator.num_pages > 1 %}
+                    {% include '_paginator.html' %}
+                 {% endif %}
+            </div>
+        </div> <!--分页 ends-->
+
+    </div> <!-- end Panel -->
+
+</div> <!-- End row -->
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static "js/jquery-3.6.0.js"%}"></script>
+{#     <script src="{% static "js/sweetalert.min.js"%}"></script>#}
+    <script src="{% static "assets/sweet-alert/sweetalert2.min.js"%}"></script>
+    <script src="{% static "assets/sweet-alert/sweetalert2.all.min.js"%}"></script>
+    <script src="{% static "assets/sweet-alert/sweetalert2.all.js"%}"></script>
+    <script src="{% static "assets/sweet-alert/sweetalert2.js"%}"></script>
+
+{#    <script src="{% static "assets/sweet-alert/sweet-alert.min.js"%}"></script>#}
+{#    <script src="{% static "assets/sweet-alert/sweet-alert.init.js"%}"></script>#}
+
+
+    <script>
+        // 编辑删除按钮
+        $("tbody").on("click","#delbtn", function () {
+            var uid = $(this).attr('userid')
+            var url = "/user/userdel/" + uid + '/'
+            Swal.fire({
+                title: "确定删除该用户？",
+                text: "删除后可就无法恢复了。",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "是的，我要删除！",
+                cancelButtonText: "取消",
+                cancelButtonColor: '#d33',
+                confirmButtonColor: '#3085d6',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "post",
+                        url: url,
+                        success: function (res) {
+                            console.log(res)
+                            if (res.code == 0) {
+                                Swal.fire({
+                                    title: "删除成功!",
+                                    text: "该用户已经删除了.",
+                                    icon: "success",
+                                    timer: 3000
+                                });
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 3000)
+                            }
+                            else {
+                                Swal.fire("OMG...", "出错拉", "error");
+                            }
+                        },
+                        error: function () {
+                            Swal.fire("OMG...", "接口调用失败!", "error")
+                        }
+                    })
+                }
+            })
+        })  //$("tbody")
+
+
+    </script>
+
+<!--
+    <script>
+        // 编辑删除按钮
+    $("tbody").on("click","#delbtn", function () {
+        var uid = $(this).attr('userid')
+        var url = "/user/userdel/" + uid + '/'
+        swal({
+            title: "确定删除该用户？",
+            text: "删除后可就无法恢复了。",
+            icon: "warning",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            confirmButtonText: "是的，我要删除！",
+            confirmButtonColor: "",
+            cancelButtonColor: '#d33',
+            cancelButtonText: "取消"
+        }, function (isConfirm) {
+            if (!isConfirm) return;
+            $.ajax({
+                type: "post",
+                url: url,
+                success: function (res) {
+                    console.log(res)
+                    if (res.code == 0) {
+                        swal.fire({
+                            title: "删除成功!",
+                            text: "该用户已经删除了.",
+                            icon: "success",
+                            timer: 3000});
+                        {#setTimeout(function () {#}
+                        {#        window.location.reload();#}
+                        {#    }, 5000);  //单位是毫秒，设置5秒后重新刷新当前页面#}
+                    }
+                    else {
+                        swal("OMG...", "出错拉", "error");
+                    }
+                },
+                error: function () {
+                    swal("OMG...", "接口调用失败!", "error");
+                }
+            })
+        });
+    })
+
+    </script>
+-->
+
+<!-- start
+
+    <script type="text/javascript">
+        $("tr").on('click', '#delbtn', function () {
+            {#let that = $(this)#}
+            {#console.log(that)#}
+            {#console.log(that.attr('userid'))#}
+            let uid = $(this).attr('userid')
+            let url = "/user/userdel/" + uid + '/'
+
+
+            {#let username = $(this).attr('username')#}
+            console.log(uid)
+            console.log(url)
+            if (confirm("是否确认删除?")){
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    success: function (res) {
+                        console.log(res)
+                        if (res.code==0){
+                            {#alert("删除成功")#}
+                            swal("删除成功!", "You clicked the button!", "success");
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 150);
+                        }
+                        else {
+                            alert(res.result)
+                            {#alert("删除失败")#}
+                        }
+                    }
+                })
+            }
+        })
+    </script>
+end comment -->
+{% endblock %}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有用户信息</title>
+</head>
+<body>
+
+    {% for user in user_list %}
+        <p>用户名: {{ user.username }}</p>
+{#        对于图片，使用img方式#}
+        图片: <img src="{{ user.img.url }}">
+        <br>
+{#        循环遍历文本信息，并进行解码#}
+        文本信息如下所示：
+        {% for line in user.introduce.readlines %}
+            <p>{{ line.decode }}</p>
+        {% endfor %}
+
+    {% endfor %}
+
+</body>
+</html>

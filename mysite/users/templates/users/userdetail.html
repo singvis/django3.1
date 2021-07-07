@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block head %}查看个人用户{% endblock %}
+
+{% block title %} 查看个人用户 {% endblock %}
+
+{% block content %}
+    <table border="1">
+            <thead style="background: deepskyblue">
+                <tr>
+                    <th>ID</th>
+                    <th>姓名</th>
+                    <th>密码</th>
+                    <th>性别</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.password }}</td>
+                        <td>{{ user.get_sex_display }}</td>
+                    </tr>
+            </tbody>
+    </table>
+{% endblock %}

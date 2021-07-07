@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery测试</title>
+</head>
+
+<body>
+
+    <form id="addform" method="post">
+        姓名：<input type="text" id="name"  name="name" placeholder="姓名">
+        <br><br>
+        手机：<input type="text" id="phone"  name="phone" placeholder="手机号">
+        <br><br>
+        密码：<input type="password" id="password"  name="password" placeholder="密码">
+        <br><br>
+        <button type="reset" id="reset">重置</button>
+        <button type="button" id="savebtn">保存</button>
+    </form>
+
+    {#CDN方式导入jquery#}
+{#    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.js"></script>#}
+    {#本地方式导入jquery#}
+    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+
+    <script type="text/javascript">
+        $("#savebtn").click(function () {
+            data=$('#addform').serialize()
+            $.ajax({
+                type: 'post',
+                url: "{% url 'users:jq' %}",
+                data: data,
+                success: function (result) {
+                    console.log(result)
+                }
+            })
+        });
+    </script>
+
+</body>
+</html>

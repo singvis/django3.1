@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jss 测试</title>
+</head>
+<body>
+    <h1 id="test">My first web pages</h1>
+    <p id="demo">我是最原始的内容，点击提交我就会改变</p>
+    <button onclick="function1()">点击这里改变世界吧!</button>
+
+    <button onclick="document.getElementById('demo').style.color='red'">点击这里变颜色!</button>
+    <button onclick="function2()">毁灭世界</button>
+    <h1 onmouseover="style.color='red'" onmouseout="style.color='blue'">请把鼠标移到这段文本上有惊喜</h1>
+    <button onclick="alert('hello world')">点击有惊喜</button>
+
+    <script>
+        function function1() {
+            {#获取id#}
+            document.getElementById("test").innerHTML="I am a Test.";
+            {#赋值变量#}
+            var c=document.getElementById('demo');
+            c.innerHTML='我是改变后的内容';
+        }
+
+        function function2() {
+            {#如果是页面加载后执行，将覆盖整个页面#}
+            document.write('世界已经被毁灭');
+        }
+
+    </script>
+
+</body>
+</html>

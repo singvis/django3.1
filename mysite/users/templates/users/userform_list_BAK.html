@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block head %}查看用户{% endblock %}
+
+{% block title %} 查看用户列表 {% endblock %}
+
+{% block content %}
+    <button ><a href="{% url 'users:useradd' %}">增加用户</a></button>
+    <br><br>
+
+{#    增加搜索框#}
+    <form action="">
+        <input type="text" name="keyword" value="{{ keyword }}" placeholder="请输入关键字">
+        <button type="submit">搜索</button>
+    </form>
+
+    <table border="1">
+            <thead style="background: deepskyblue">
+                <tr>
+                    <th>ID</th>
+                    <th>姓名</th>
+                    <th>手机</th>
+                    <th>密码</th>
+                    <th>性别</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in userlist %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td>{{ user.password }}</td>
+                        <td>{% if user.sex == 1 %}男 {% elif user.sex == 2 %}女 {% else %}未知{% endif %}</td>
+                        <td>
+                            <a href="{% url 'users:detail' user.id %}">更新</a>
+                            <a class="delbtn" userid="{{ user.id }}">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+{% endblock %}
+
+
+{% block js %}
+    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+
+    <script type="text/javascript">
+        $("tbody").on('click', '.delbtn', function () {
+            let that = $(this)
+            console.log(that)
+            console.log(that.attr('userid'))
+            if (confirm("是否确认删除?")){
+                let uid = $(this).attr('userid')
+                $.ajax({
+                    url: "{% url 'users:userlist' %}",
+                    type: 'DELETE',
+                    data: {"id":uid},
+                    success: function (res) {
+                        console.log(res)
+                        if (res.code==0){
+                            alert("删除成功")
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 50);
+                        }
+                        else {
+                            alert(res.result)
+                            alert("删除失败")
+                        }
+                    }
+
+                })
+            }
+        })
+    </script>
+{% endblock %}
